@@ -4,7 +4,7 @@ var N_SIZE = 3,
     turn = "X",
     score,
     moves,
-    gameOver = false; // ✅ added
+    gameOver = false; // added
 
 function init() {
     var board = document.createElement('table');
@@ -47,7 +47,7 @@ function startNewGame() {
     score = { "X": 0, "O": 0 };
     moves = 0;
     turn = "X";
-    gameOver = false; // ✅ reset
+    gameOver = false; //  reset
 
     boxes.forEach(function (square) {
         square.innerHTML = EMPTY;
@@ -72,7 +72,7 @@ function win(clicked) {
     return false;
 }
 
-// ✅ FIXED (exact match instead of regex)
+//  FIXED (exact match instead of regex)
 function contains(selector, text) {
     var elements = document.querySelectorAll(selector);
 
