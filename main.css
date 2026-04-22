@@ -105,3 +105,114 @@ button {
 button:hover {
     background: #ff4d6d;
 }
+/* ================= ROOT THEME ================= */
+:root {
+    --bg: #ffffff;
+    --text: #111;
+    --cell-bg: #f1f5f9;
+    --border: #2563eb;
+    --x-color: #2563eb;
+    --o-color: #e11d48;
+}
+
+body.dark {
+    --bg: #0f172a;
+    --text: #ffffff;
+    --cell-bg: #1e293b;
+    --border: #00c8ff;
+    --x-color: #00c8ff;
+    --o-color: #ff4d6d;
+}
+
+/* ================= BODY ================= */
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: Arial, sans-serif;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+/* ================= BOARD ================= */
+table {
+    border-collapse: collapse;
+    margin: 30px auto;
+}
+
+/* ================= CELLS ================= */
+td {
+    width: 100px;
+    height: 100px;
+    font-size: 60px;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+
+    background: var(--cell-bg);
+    border: 3px solid var(--border);
+    border-radius: 12px;
+
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* ================= HOVER ================= */
+td:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px var(--border);
+}
+
+/* ================= X / O ================= */
+td.X {
+    color: var(--x-color);
+}
+
+td.O {
+    color: var(--o-color);
+}
+
+/* ================= WIN ================= */
+td.win {
+    background: linear-gradient(135deg, var(--border), #1e3a8a);
+    color: white;
+    animation: glow 0.7s infinite alternate;
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 10px var(--border); }
+    to { box-shadow: 0 0 25px var(--border); }
+}
+
+/* ================= BUTTON ================= */
+button {
+    padding: 10px 20px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 8px;
+    background: var(--border);
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px var(--border);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 600px) {
+    td {
+        width: 70px;
+        height: 70px;
+        font-size: 40px;
+    }
+}
+
+@media (max-width: 400px) {
+    td {
+        width: 55px;
+        height: 55px;
+        font-size: 30px;
+    }
+}
