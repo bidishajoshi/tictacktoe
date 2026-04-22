@@ -3,7 +3,8 @@ var N_SIZE = 3,
     boxes = [],
     turn = "X",
     score,
-    moves;
+    moves,
+    gameOver = false; // ✅ added
 
 function init() {
     var board = document.createElement('table');
@@ -34,7 +35,7 @@ function init() {
             row.appendChild(cell);
             boxes.push(cell);
 
-            identifier++; // ✅ FIXED (was doubling before)
+            identifier++;
         }
     }
 
@@ -46,10 +47,11 @@ function startNewGame() {
     score = { "X": 0, "O": 0 };
     moves = 0;
     turn = "X";
+    gameOver = false; // ✅ reset
 
     boxes.forEach(function (square) {
         square.innerHTML = EMPTY;
-        square.classList.remove("win"); // remove highlight
+        square.classList.remove("win", "X", "O");
     });
 
     document.getElementById('turn').textContent = 'Player ' + turn;
@@ -63,7 +65,6 @@ function win(clicked) {
         var items = contains('#tictactoe ' + testClass, turn);
 
         if (items.length == N_SIZE) {
-            // ✅ highlight winning cells
             items.forEach(cell => cell.classList.add("win"));
             return true;
         }
@@ -71,48 +72,52 @@ function win(clicked) {
     return false;
 }
 
+// ✅ FIXED (exact match instead of regex)
 function contains(selector, text) {
     var elements = document.querySelectorAll(selector);
 
     return [].filter.call(elements, function (element) {
-        return RegExp(text).test(element.textContent);
+        return element.textContent === text;
     });
 }
 
 function set() {
-    if (this.innerHTML !== EMPTY) return;
+    if (this.innerHTML !== EMPTY || gameOver) return; // ✅ block extra clicks
 
     this.innerHTML = turn;
-    this.classList.add(turn); // add X or O class for styling
+    this.classList.add(turn);
 
     moves += 1;
-    score[turn] += this.identifier;
 
     if (win(this)) {
+        gameOver = true; // ✅ stop game
+
         document.getElementById('turn').textContent = 'Winner: Player ' + turn;
 
         setTimeout(function () {
             alert('Winner: Player ' + turn);
             startNewGame();
-        }, 1000); // delay so user sees final move
+        }, 800);
 
     } else if (moves === N_SIZE * N_SIZE) {
+        gameOver = true;
+
         document.getElementById('turn').textContent = 'Draw';
 
         setTimeout(function () {
             alert("Draw");
             startNewGame();
-        }, 1000);
+        }, 800);
 
     } else {
         turn = turn === "X" ? "O" : "X";
         document.getElementById('turn').textContent = 'Player ' + turn;
     }
 }
+
 function toggleTheme() {
     document.body.classList.toggle("dark");
 
-    // save preference
     if (document.body.classList.contains("dark")) {
         localStorage.setItem("theme", "dark");
     } else {
@@ -126,4 +131,5 @@ window.onload = function () {
         document.body.classList.add("dark");
     }
 };
+
 init();
